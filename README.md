@@ -1,8 +1,8 @@
 <!--
  * @Date: 2020-12-01 15:02:12
- * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-12-01 21:34:58
- * @FilePath: \partd:\rf-dev\vue3-admin-demo\README.md
+ * @LastEditors: zhangyuge
+ * @LastEditTime: 2020-12-03 14:30:36
+ * @FilePath: \partd:\rf-dev\vue3-admin-template\README.md
 -->
 # vue3-admin-demo
 
@@ -36,4 +36,5 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 [https://vue3js.cn/docs/zh/guide/introduction.html](https://vue3js.cn/docs/zh/guide/introduction.html)
 
-[https://vue3js.cn/docs/zh/](https://vue3js.cn/docs/zh/)
+[vue3中文官方文档](https://vue3js.cn/docs/zh/)
+[typescript阮一峰](https://ts.xcatliu.com/)
