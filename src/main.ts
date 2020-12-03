@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-12-01 15:01:33
  * @LastEditors: zhangyuge
- * @LastEditTime: 2020-12-03 11:46:51
+ * @LastEditTime: 2020-12-03 11:50:59
  * @FilePath: \partd:\rf-dev\vue3-admin-template\src\main.ts
  */
 import { createApp } from 'vue';
@@ -17,6 +17,7 @@ import * as directives from './directive/index.js'; //import directive fn
 
 const app = createApp(App);
 
+////<p>{{ $filters.currencyUSD(accountBalance) }}</p>
 app.config.globalProperties.$filters = filters;
 
 app.use(ElementPlus);
