@@ -100,7 +100,7 @@ export const formatNumberFloat = n => {
 };
 
 //过滤尾数0
-export const formatNumberFloatPrecent = n => {
+export const formatNumberFloatPrecent = (n: any): string | number => {
     if (n) {
         return parseFloat(n / 100 + '');
     } else {
