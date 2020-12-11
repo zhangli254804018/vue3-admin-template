@@ -19,7 +19,7 @@ function pluralize(time: number | string, label: string): string {
 /**
  * @param {number} time
  */
-export function timeAgo(time) {
+export function timeAgo(time: any) {
     const between = Date.now() / 1000 - Number(time);
     if (between < 3600) {
         return pluralize(~~(between / 60), ' minute');
@@ -36,7 +36,7 @@ export function timeAgo(time) {
  * @param {number} num
  * @param {number} digits
  */
-export function numberFormatter(num, digits) {
+export function numberFormatter(num: number, digits: number | undefined) {
     const si = [
         { value: 1e18, symbol: 'E' },
         { value: 1e15, symbol: 'P' },
@@ -61,7 +61,7 @@ export function numberFormatter(num, digits) {
  * 10000 => "10,000"
  * @param {number} num
  */
-export function toThousandFilter(num) {
+export function toThousandFilter(num: string | number) {
     return (+num || 0)
         .toString()
         .replace(/^-?\d+/g, m => m.replace(/(?=(?!\b)(\d{3})+$)/g, ','));
@@ -71,12 +71,12 @@ export function toThousandFilter(num) {
  * Upper case first char
  * @param {String} string
  */
-export function uppercaseFirst(string) {
+export function uppercaseFirst(string: string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
 //新增新增分数过滤为元展示
-export const formatNumberYuan = (n, r) => {
+export const formatNumberYuan = (n: number, r: any) => {
     if (n) {
         if (r) n = Number(n) * Number(r);
         const _n = n / 100 + '';
@@ -91,7 +91,7 @@ export const formatNumberYuan = (n, r) => {
 };
 
 //过滤尾数0
-export const formatNumberFloat = n => {
+export const formatNumberFloat = (n: string) => {
     if (n) {
         return parseFloat(n);
     } else {
@@ -100,7 +100,7 @@ export const formatNumberFloat = n => {
 };
 
 //过滤尾数0
-export const formatNumberFloatPrecent = n => {
+export const formatNumberFloatPrecent = (n: number) => {
     if (n) {
         return parseFloat(n / 100 + '');
     } else {
