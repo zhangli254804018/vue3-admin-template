@@ -8,12 +8,12 @@
  * @param {string} cFormat
  * @returns {string | null}
  */
-export function parseTime(time, cFormat) {
+export function parseTime(time: string | number | Date, cFormat: string) {
     if (arguments.length === 0 || !time) {
         return null;
     }
     const format = cFormat || '{y}-{m}-{d} {h}:{i}:{s}';
-    let date;
+    let date: Date;
     if (typeof time === 'object') {
         date = time;
     } else {
@@ -58,16 +58,16 @@ export function parseTime(time, cFormat) {
  * @param {string} option
  * @returns {string}
  */
-export function formatTime(time, option) {
+export function formatTime(time: string | number | Date, option: string) {
     if (('' + time).length === 10) {
-        time = parseInt(time) * 1000;
+        time = Number(time) * 1000;
     } else {
         time = +time;
     }
     const d = new Date(time);
     const now = Date.now();
 
-    const diff = (now - d) / 1000;
+    const diff = (now - Number(d)) / 1000;
 
     if (diff < 30) {
         return '刚刚';
@@ -100,7 +100,7 @@ export function formatTime(time, option) {
  * @param {string} url
  * @returns {Object}
  */
-export function param2Obj(url) {
+export function param2Obj(url: string) {
     const search = decodeURIComponent(url.split('?')[1]).replace(/\+/g, ' ');
     if (!search) {
         return {};
@@ -121,8 +121,15 @@ export function param2Obj(url) {
  * @param {Object} name value
  * @returns {Object}
  */
-export function setLocalStorage(name, value) {
-    const data = {};
+export function setLocalStorage(name: string, value: any) {
+    interface dataObj {
+        type: Object | string | number;
+        data: Object | string | number;
+    }
+    const data: dataObj = {
+        type: '',
+        data: ''
+    };
     if (typeof value === 'object') {
         data.type = 'object';
     } else if (typeof value === 'string') {
@@ -142,7 +149,7 @@ export function setLocalStorage(name, value) {
  * @param {Object} name value
  * @returns {Object}
  */
-export function getLocalStorage(name) {
+export function getLocalStorage(name: string) {
     let res = '';
     try {
         res = localStorage.getItem(name);
@@ -163,19 +170,19 @@ export function getLocalStorage(name) {
  * @param {Object} name value Day
  * @returns {Object}
  */
-export function setCookie(name, value, Day) {
+export function setCookie(name: string, value: string, Day: number) {
     var Days = Day || 30;
     var exp = new Date();
     exp.setTime(exp.getTime() + Days * 24 * 60 * 60 * 1000);
     document.cookie =
-        name + '=' + escape(value) + ';expires=' + exp.toGMTString();
+        name + '=' + escape(value) + ';expires=' + exp.toUTCString();
 }
 /**
  * @param {Object} name value Day
  * @returns {Object}
  */
-export function getCookie(name) {
-    var arr;
+export function getCookie(name: string) {
+    var arr: string[];
     var reg = new RegExp('(^| )' + name + '=([^;]*)(;|$)');
     if ((arr = document.cookie.match(reg))) {
         return unescape(arr[2]);
@@ -187,16 +194,16 @@ export function getCookie(name) {
  * @param {Object} name value Day
  * @returns {Object}
  */
-export function delCookie(name) {
+export function delCookie(name: string) {
     var exp = new Date();
     exp.setTime(exp.getTime() - 1); // 将date设置为过去的时间
     var cval = getCookie(name);
     if (cval != null) {
-        document.cookie = name + '=' + cval + ';expires=' + exp.toGMTString();
+        document.cookie = name + '=' + cval + ';expires=' + exp.toUTCString();
     }
 }
 
-export const sleep = ms => {
+export const sleep = (ms: number) => {
     return new Promise(resolve => {
         setTimeout(resolve, ms);
     });
@@ -208,8 +215,16 @@ export const sleep = ms => {
  * @param {boolean} immediate
  * @return {*}
  */
-export function debounce(func, wait, immediate) {
-    let timeout, args, context, timestamp, result;
+export function debounce(
+    func: { apply: (arg0: any, arg1: any[]) => any },
+    wait: number,
+    immediate: any
+) {
+    let timeout: NodeJS.Timeout,
+        args: any,
+        context: any,
+        timestamp: number,
+        result: any;
 
     const later = function() {
         // 据上一次触发时间间隔
@@ -228,7 +243,7 @@ export function debounce(func, wait, immediate) {
         }
     };
 
-    return function(...args) {
+    return function(...args: any) {
         context = this;
         timestamp = +new Date();
         const callNow = immediate && !timeout;
@@ -247,7 +262,7 @@ export function debounce(func, wait, immediate) {
     @param num 为数字
     ex. return 100,00,00等
 */
-export function formatCurrency(num) {
+export function formatCurrency(num: string | number) {
     if (num) {
         // 将num中的$,去掉，将num变成一个纯粹的数据格式字符串
         num = num.toString().replace(/\$|\,/g, '');
@@ -308,7 +323,7 @@ export function timeFormat(timestamp = null, fmt = 'yyyy-mm-dd') {
     // 判断用户输入的时间戳是秒还是毫秒,一般前端js获取的时间戳是毫秒(13位),后端传过来的为秒(10位)
     if (timestamp.toString().length == 10) timestamp *= 1000;
     let date = new Date(timestamp);
-    let ret;
+    let ret: (string | any[])[];
     let opt = {
         'y+': date.getFullYear().toString(), // 年
         'm+': (date.getMonth() + 1).toString(), // 月
@@ -334,7 +349,7 @@ export function timeFormat(timestamp = null, fmt = 'yyyy-mm-dd') {
 
 //获取AddDayCount天后的日期
 //比如知道昨日 GetDateStr(-1)
-export const GetDateStr = AddDayCount => {
+export const GetDateStr = (AddDayCount: number) => {
     var dd = new Date();
     dd.setDate(dd.getDate() + AddDayCount); //获取AddDayCount天后的日期
     var y = dd.getFullYear();
@@ -348,7 +363,7 @@ export const TIME_RANGE = {
     shortcuts: [
         {
             text: '今天',
-            onClick(picker) {
+            onClick(picker: { $emit: (arg0: string, arg1: Date[]) => void }) {
                 const nowt = new Date();
                 const strnowt =
                     nowt.getFullYear() +
@@ -366,7 +381,7 @@ export const TIME_RANGE = {
         },
         {
             text: '昨天',
-            onClick(picker) {
+            onClick(picker: { $emit: (arg0: string, arg1: Date[]) => void }) {
                 const nowt = new Date();
                 const strnowt =
                     nowt.getFullYear() +
@@ -384,7 +399,7 @@ export const TIME_RANGE = {
         },
         {
             text: '最近一周',
-            onClick(picker) {
+            onClick(picker: { $emit: (arg0: string, arg1: Date[]) => void }) {
                 const nowt = new Date();
                 const strnowt =
                     nowt.getFullYear() +
@@ -402,7 +417,7 @@ export const TIME_RANGE = {
         },
         {
             text: '最近一个月',
-            onClick(picker) {
+            onClick(picker: { $emit: (arg0: string, arg1: Date[]) => void }) {
                 const nowt = new Date();
                 const strnowt =
                     nowt.getFullYear() +
@@ -420,7 +435,7 @@ export const TIME_RANGE = {
         },
         {
             text: '最近三个月',
-            onClick(picker) {
+            onClick(picker: { $emit: (arg0: string, arg1: Date[]) => void }) {
                 const nowt = new Date();
                 const strnowt =
                     nowt.getFullYear() +
@@ -437,18 +452,17 @@ export const TIME_RANGE = {
             }
         }
     ],
-    disabledDate(time) {
+    disabledDate(time: { getTime: () => number }) {
         return time.getTime() > Date.now();
     }
 };
-
 
 // 饿了么时间组件的常量
 export const TIME_RANGE_ALL = {
     shortcuts: [
         {
             text: '今天',
-            onClick(picker) {
+            onClick(picker: { $emit: (arg0: string, arg1: Date[]) => void }) {
                 const nowt = new Date();
                 const strnowt =
                     nowt.getFullYear() +
@@ -466,7 +480,7 @@ export const TIME_RANGE_ALL = {
         },
         {
             text: '昨天',
-            onClick(picker) {
+            onClick(picker: { $emit: (arg0: string, arg1: Date[]) => void }) {
                 const nowt = new Date();
                 const strnowt =
                     nowt.getFullYear() +
@@ -484,7 +498,7 @@ export const TIME_RANGE_ALL = {
         },
         {
             text: '最近一周',
-            onClick(picker) {
+            onClick(picker: { $emit: (arg0: string, arg1: Date[]) => void }) {
                 const nowt = new Date();
                 const strnowt =
                     nowt.getFullYear() +
@@ -502,7 +516,7 @@ export const TIME_RANGE_ALL = {
         },
         {
             text: '最近一个月',
-            onClick(picker) {
+            onClick(picker: { $emit: (arg0: string, arg1: Date[]) => void }) {
                 const nowt = new Date();
                 const strnowt =
                     nowt.getFullYear() +
@@ -520,7 +534,7 @@ export const TIME_RANGE_ALL = {
         },
         {
             text: '最近三个月',
-            onClick(picker) {
+            onClick(picker: { $emit: (arg0: string, arg1: Date[]) => void }) {
                 const nowt = new Date();
                 const strnowt =
                     nowt.getFullYear() +
@@ -536,14 +550,14 @@ export const TIME_RANGE_ALL = {
                 picker.$emit('pick', [start, end]);
             }
         }
-    ],
+    ]
     // disabledDate(time) {
     //     return time.getTime() > Date.now();
     // }
 };
 
 //提交代码点击超链接
-export const openLink = src => {
+export const openLink = (src: string) => {
     let a = document.createElement('a');
     a.setAttribute('href', src);
     a.setAttribute('target', '_blank');
@@ -558,21 +572,25 @@ export const openLink = src => {
 };
 
 //去重
-export const unqiArray = (arr, type = 'time') => {
+export const unqiArray = (arr: any[], type = 'time') => {
     var hash = {};
-    arr = arr.reduce(function(item, next) {
+    arr = arr.reduce(function(
+        item: any[],
+        next: { [x: string]: string | number }
+    ) {
         hash[next[type]] ? '' : (hash[next[type]] = true && item.push(next));
         return item;
-    }, []);
+    },
+    []);
     return arr;
 };
 
 //传入树状结构 list:[name:'0-1',children:[{name:'1-1'}]]
 //处理获取到一维数组
-export const childArrs = (arr, type = 'children') => {
+export const childArrs = (arr: any, type = 'children') => {
     let newArr = [];
-    function arrEach(arr) {
-        arr.forEach(item => {
+    function arrEach(arr: any[]) {
+        arr.forEach((item: { [x: string]: any; url: any }) => {
             if (item && item.url) {
                 newArr.push(item);
             }
@@ -586,7 +604,7 @@ export const childArrs = (arr, type = 'children') => {
 };
 
 //判断是否是数字
-export const isNumber = val => {
+export const isNumber = (val: string | number) => {
     if (val === '' || val == null) {
         return false;
     }
@@ -595,4 +613,4 @@ export const isNumber = val => {
     } else {
         return false;
     }
-}
+};
