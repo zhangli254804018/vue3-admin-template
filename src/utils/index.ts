@@ -8,7 +8,10 @@
  * @param {string} cFormat
  * @returns {string | null}
  */
-export function parseTime(time: string | number | Date, cFormat: string) {
+export function parseTime(
+    time: string | number | Date,
+    cFormat: string
+): string | null {
     if (arguments.length === 0 || !time) {
         return null;
     }
@@ -58,7 +61,10 @@ export function parseTime(time: string | number | Date, cFormat: string) {
  * @param {string} option
  * @returns {string}
  */
-export function formatTime(time: string | number | Date, option: string) {
+export function formatTime(
+    time: string | number | Date,
+    option: string
+): string {
     if (('' + time).length === 10) {
         time = Number(time) * 1000;
     } else {
@@ -100,7 +106,7 @@ export function formatTime(time: string | number | Date, option: string) {
  * @param {string} url
  * @returns {Object}
  */
-export function param2Obj(url: string) {
+export function param2Obj(url: string): object {
     const search = decodeURIComponent(url.split('?')[1]).replace(/\+/g, ' ');
     if (!search) {
         return {};
@@ -121,7 +127,7 @@ export function param2Obj(url: string) {
  * @param {Object} name value
  * @returns {Object}
  */
-export function setLocalStorage(name: string, value: any) {
+export function setLocalStorage(name: string, value: any): void {
     interface dataObj {
         type: Object | string | number;
         data: Object | string | number;
@@ -149,7 +155,7 @@ export function setLocalStorage(name: string, value: any) {
  * @param {Object} name value
  * @returns {Object}
  */
-export function getLocalStorage(name: string) {
+export function getLocalStorage(name: string): object {
     let res = '';
     try {
         res = localStorage.getItem(name);
@@ -170,7 +176,7 @@ export function getLocalStorage(name: string) {
  * @param {Object} name value Day
  * @returns {Object}
  */
-export function setCookie(name: string, value: string, Day: number) {
+export function setCookie(name: string, value: string, Day: number): object {
     var Days = Day || 30;
     var exp = new Date();
     exp.setTime(exp.getTime() + Days * 24 * 60 * 60 * 1000);
@@ -181,7 +187,7 @@ export function setCookie(name: string, value: string, Day: number) {
  * @param {Object} name value Day
  * @returns {Object}
  */
-export function getCookie(name: string) {
+export function getCookie(name: string): object {
     var arr: string[];
     var reg = new RegExp('(^| )' + name + '=([^;]*)(;|$)');
     if ((arr = document.cookie.match(reg))) {
@@ -194,7 +200,7 @@ export function getCookie(name: string) {
  * @param {Object} name value Day
  * @returns {Object}
  */
-export function delCookie(name: string) {
+export function delCookie(name: string): object {
     var exp = new Date();
     exp.setTime(exp.getTime() - 1); // 将date设置为过去的时间
     var cval = getCookie(name);
@@ -219,7 +225,7 @@ export function debounce(
     func: { apply: (arg0: any, arg1: any[]) => any },
     wait: number,
     immediate: any
-) {
+): any {
     let timeout: NodeJS.Timeout,
         args: any,
         context: any,
