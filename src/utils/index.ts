@@ -155,8 +155,8 @@ export function setLocalStorage(name: string, value: any): void {
  * @param {Object} name value
  * @returns {Object}
  */
-export function getLocalStorage(name: string): object {
-    let res = '';
+export function getLocalStorage(name: string): object | null {
+    let res: string | object;
     try {
         res = localStorage.getItem(name);
         if (!res) {
@@ -167,8 +167,8 @@ export function getLocalStorage(name: string): object {
         res = getCookie(name);
     }
     if (res) {
-        res = JSON.parse(res);
-        return res.data;
+        let _res = typeof res == 'string' ? JSON.parse(res) : {};
+        return _res.data;
     }
     return null;
 }
@@ -176,7 +176,7 @@ export function getLocalStorage(name: string): object {
  * @param {Object} name value Day
  * @returns {Object}
  */
-export function setCookie(name: string, value: string, Day: number): object {
+export function setCookie(name: string, value: string, Day?: number): void {
     var Days = Day || 30;
     var exp = new Date();
     exp.setTime(exp.getTime() + Days * 24 * 60 * 60 * 1000);
@@ -187,7 +187,7 @@ export function setCookie(name: string, value: string, Day: number): object {
  * @param {Object} name value Day
  * @returns {Object}
  */
-export function getCookie(name: string): object {
+export function getCookie(name: string): object | string {
     var arr: string[];
     var reg = new RegExp('(^| )' + name + '=([^;]*)(;|$)');
     if ((arr = document.cookie.match(reg))) {
@@ -200,7 +200,7 @@ export function getCookie(name: string): object {
  * @param {Object} name value Day
  * @returns {Object}
  */
-export function delCookie(name: string): object {
+export function delCookie(name: string): void {
     var exp = new Date();
     exp.setTime(exp.getTime() - 1); // 将date设置为过去的时间
     var cval = getCookie(name);
@@ -272,8 +272,9 @@ export function formatCurrency(num: string | number) {
     if (num) {
         // 将num中的$,去掉，将num变成一个纯粹的数据格式字符串
         num = num.toString().replace(/\$|\,/g, '');
+        var _num = Number(num);
         // 如果num不是数字，则将num置0，并返回
-        if (num == '' || isNaN(num)) {
+        if (num == '' || isNaN(_num)) {
             return 'Not a Number ! ';
         }
         // 如果num是负数，则获取她的符号
@@ -340,7 +341,8 @@ export function timeFormat(timestamp = null, fmt = 'yyyy-mm-dd') {
         // 有其他格式化字符需求可以继续添加，必须转化成字符串
     };
     for (let k in opt) {
-        ret = new RegExp('(' + k + ')').exec(fmt);
+        let _ret = new RegExp('(' + k + ')').exec(fmt);
+        let ret = _ret || [];
         if (ret) {
             fmt = fmt.replace(
                 ret[1],
@@ -610,8 +612,9 @@ export const childArrs = (arr: any, type = 'children') => {
 };
 
 //判断是否是数字
-export const isNumber = (val: string | number) => {
-    if (val === '' || val == null) {
+export const isNumber = (val: string | number): boolean => {
+    val = Number(val);
+    if (val == null) {
         return false;
     }
     if (!isNaN(val)) {
