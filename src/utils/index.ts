@@ -45,7 +45,7 @@ export function parseTime(
         s: date.getSeconds(),
         a: date.getDay()
     };
-    const time_str = format.replace(/{([ymdhisa])+}/g, (result, key) => {
+    const timeStr = format.replace(/{([ymdhisa])+}/g, (result, key) => {
         const value = formatObj[key];
         // Note: getDay() returns 0 on Sunday
         if (key === 'a') {
@@ -53,7 +53,7 @@ export function parseTime(
         }
         return value.toString().padStart(2, '0');
     });
-    return time_str;
+    return timeStr;
 }
 
 /**
@@ -128,13 +128,9 @@ export function param2Obj(url: string): object {
  * @returns {Object}
  */
 export function setLocalStorage(name: string, value: any): void {
-    interface dataObj {
-        type: Object | string | number;
-        data: Object | string | number;
-    }
-    const data: dataObj = {
+    const data = {
         type: '',
-        data: ''
+        data: {}
     };
     if (typeof value === 'object') {
         data.type = 'object';
@@ -613,10 +609,10 @@ export const childArrs = (arr: any, type = 'children') => {
 
 //判断是否是数字
 export const isNumber = (val: string | number): boolean => {
-    val = Number(val);
     if (val == null) {
         return false;
     }
+    val = Number(val);
     if (!isNaN(val)) {
         return true;
     } else {
