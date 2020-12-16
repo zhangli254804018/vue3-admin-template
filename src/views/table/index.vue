@@ -1,3 +1,11 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-12-16 19:45:59
+ * @LastEditTime: 2020-12-16 21:23:55
+ * @LastEditors: your name
+ * @Description: In User Settings Edit
+ * @FilePath: /out/vue3-admin-template/src/views/table/index.vue
+-->
 <template>
   <div class="app-container">
     <el-table
@@ -35,7 +43,7 @@
         align="center"
       >
         <template #default="scope">
-          <el-tag :type="scope.row.status | statusFilter">{{
+          <el-tag :type="statusFilter(scope.row.status)">{{
             scope.row.status
           }}</el-tag>
         </template>
