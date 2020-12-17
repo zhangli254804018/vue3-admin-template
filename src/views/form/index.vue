@@ -12,11 +12,21 @@
       </el-form-item>
       <el-form-item label="Activity time">
         <el-col :span="11">
-          <el-date-picker v-model="form.date1" type="date" placeholder="Pick a date" style="width: 100%;" />
+          <el-date-picker
+            v-model="form.date1"
+            type="date"
+            placeholder="Pick a date"
+            style="width: 100%;"
+          />
         </el-col>
         <el-col :span="2" class="line">-</el-col>
         <el-col :span="11">
-          <el-time-picker v-model="form.date2" type="fixed-time" placeholder="Pick a time" style="width: 100%;" />
+          <el-time-picker
+            v-model="form.date2"
+            type="fixed-time"
+            placeholder="Pick a time"
+            style="width: 100%;"
+          />
         </el-col>
       </el-form-item>
       <el-form-item label="Instant delivery">
@@ -49,13 +59,13 @@
 
 <script lang="ts">
 // todo
-import { defineComponent, reactive, toRefs } from 'vue'
-import { useMessage } from 'element3'
-const Message = useMessage()
+import { defineComponent, reactive, toRefs } from "vue";
+import { ElMessage } from "element-plus";
+const Message = ElMessage();
 
 export default defineComponent({
   // setup(){
-  //   const Message = useMessage()
+  //   const Message = ElMessage()
   //    const state = reactive({
   //      form: {
   //       name: '',
@@ -68,7 +78,7 @@ export default defineComponent({
   //       desc: '',
   //     },
   //    })
-    
+
   //   const onSubmit = () => {
   //     Message('submit!')
   //   }
@@ -86,34 +96,33 @@ export default defineComponent({
   data() {
     return {
       form: {
-        name: '',
-        region: '',
-        date1: '',
-        date2: '',
+        name: "",
+        region: "",
+        date1: "",
+        date2: "",
         delivery: false,
         type: [],
-        resource: '',
-        desc: '',
+        resource: "",
+        desc: "",
       },
-    }
+    };
   },
   methods: {
     onSubmit() {
-      Message('submit!')
+      ElMessage("submit!");
     },
     onCancel() {
-      Message({
-        message: 'cancel!',
-        type: 'warning',
-      })
+      ElMessage({
+        message: "cancel!",
+        type: "warning",
+      });
     },
   },
-})
+});
 </script>
 
 <style scoped>
-.line{
+.line {
   text-align: center;
 }
 </style>
-
