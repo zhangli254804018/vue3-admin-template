@@ -54,14 +54,15 @@
         type="primary"
         style="width: 100%; margin-bottom: 30px;"
         @click.prevent="handleLogin"
-      >Login</el-button>
+        >Login</el-button
+      >
 
       <div class="tips">
         <span style="margin-right: 20px;">username: admin</span>
         <span> password: any</span>
       </div>
     </el-form>
-    {{ loginForm }}
+    <!-- {{ loginForm }} -->
   </div>
 </template>
 
@@ -74,13 +75,13 @@ import {
   ref,
   toRef,
   toRefs,
-} from 'vue'
-import { validUsername } from '@/utils/validate'
-import { useRoute, useRouter } from 'vue-router'
-import { useStore } from 'vuex'
+} from "vue";
+import { validUsername } from "@/utils/validate";
+import { useRoute, useRouter } from "vue-router";
+import { useStore } from "vuex";
 
 export default defineComponent({
-  name: 'Login',
+  name: "Login",
 
   // setup() {
   //   const route = useRoute()
@@ -170,76 +171,76 @@ export default defineComponent({
   data() {
     const validateUsername = (rule, value, callback) => {
       if (!validUsername(value)) {
-        callback(new Error('Please enter the correct user name'))
+        callback(new Error("Please enter the correct user name"));
       } else {
-        callback()
+        callback();
       }
-    }
+    };
     const validatePassword = (rule, value, callback) => {
       if (value.length < 6) {
-        callback(new Error('The password can not be less than 6 digits'))
+        callback(new Error("The password can not be less than 6 digits"));
       } else {
-        callback()
+        callback();
       }
-    }
+    };
     return {
       loginForm: {
-        username: 'admin',
-        password: '111111',
+        username: "admin",
+        password: "111111",
       },
       loginRules: {
         username: [
-          { required: true, trigger: 'blur', validator: validateUsername },
+          { required: true, trigger: "blur", validator: validateUsername },
         ],
         password: [
-          { required: true, trigger: 'blur', validator: validatePassword },
+          { required: true, trigger: "blur", validator: validatePassword },
         ],
       },
       loading: false,
-      passwordType: 'password',
+      passwordType: "password",
       redirect: undefined,
-    }
+    };
   },
   watch: {
     $route: {
       handler: function(route) {
-        this.redirect = route.query && route.query.redirect
+        this.redirect = route.query && route.query.redirect;
       },
       immediate: true,
     },
   },
   methods: {
     showPwd() {
-      if (this.passwordType === 'password') {
-        this.passwordType = ''
+      if (this.passwordType === "password") {
+        this.passwordType = "";
       } else {
-        this.passwordType = 'password'
+        this.passwordType = "password";
       }
       this.$nextTick(() => {
-        this.$refs.password.focus()
-      })
+        this.$refs.password.focus();
+      });
     },
     handleLogin() {
       this.$refs.loginForm.validate((valid) => {
         if (valid) {
-          this.loading = true
+          this.loading = true;
           this.$store
-            .dispatch('user/login', this.loginForm)
+            .dispatch("user/login", this.loginForm)
             .then(() => {
-              this.$router.push({ path: this.redirect || '/' })
-              this.loading = false
+              this.$router.push({ path: this.redirect || "/" });
+              this.loading = false;
             })
             .catch(() => {
-              this.loading = false
-            })
+              this.loading = false;
+            });
         } else {
-          console.log('error submit!!')
-          return false
+          console.log("error submit!!");
+          return false;
         }
-      })
+      });
     },
   },
-})
+});
 </script>
 
 <style lang="scss">
