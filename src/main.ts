@@ -1,28 +1,29 @@
-/*
- * @Date: 2020-12-01 15:01:33
- * @LastEditors: zhangyuge
- * @LastEditTime: 2020-12-03 11:50:59
- * @FilePath: \partd:\rf-dev\vue3-admin-template\src\main.ts
- */
-import { createApp } from 'vue';
-import App from './App.vue';
-import router from './router';
-import store from './store';
+import { createApp } from "vue";
+import App from "./App.vue";
+import router from "./router";
+import store from "./store";
 
-import ElementPlus from 'element-plus';
-import 'element-plus/lib/theme-chalk/index.css';
+import "normalize.css/normalize.css"; // A modern alternative to CSS resets
+import "@/styles/index.scss"; // global css
 
-import * as filters from './filters'; // global filters
-import * as directives from './directive/index.js'; //import directive fn
+// import "element-plus/lib/theme-chalk/index.css";
+// import element-plus from "element-plus";
 
-const app = createApp(App);
+import ElementPlus from "element-plus";
+import "element-plus/lib/theme-chalk/index.css";
 
-////<p>{{ $filters.currencyUSD(accountBalance) }}</p>
-app.config.globalProperties.$filters = filters;
+import { useIcons } from "@/icons"; // icon
+import "@/permission"; // permission control
+import * as directives from './directive'//import directive fn
 
-app.use(ElementPlus);
-app.use(store);
-app.use(router);
-app.mount('#app');
+const app = createApp(App)
+  .use(router)
+  .use(store)
+  .use(ElementPlus);
+useIcons(app);
 
+Object.keys(directives).forEach(key => {
+  app.directive(key, directives[key])
+})
 
+app.mount("#app");
