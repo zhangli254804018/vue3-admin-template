@@ -2,8 +2,8 @@
  * @description:
  * @author: steve.deng
  * @Date: 2020-09-27 16:14:28
- * @LastEditors: steve.deng
- * @LastEditTime: 2020-09-27 16:15:37
+ * @LastEditors: zhangyuge
+ * @LastEditTime: 2020-11-10 10:06:27
  */
 module.exports = {
     trailingComma: 'none', // 尾随逗号

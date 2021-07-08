@@ -6,14 +6,14 @@
  */
 import permissionBtn from './permission-btn'
 
-const install = function(Vue) {
-    Vue.directive('permission-btn', permissionBtn)
-}
+// const install = function(Vue) {
+//     Vue.directive('permission-btn', permissionBtn)
+// }
 
-if (window.Vue) {
-    window['permission-btn'] = permissionBtn
-    Vue.use(install); // eslint-disable-line
-}
+// if (window.Vue) {
+//     window['permission-btn'] = permissionBtn
+//     Vue.use(install); // eslint-disable-line
+// }
 
-permissionBtn.install = install
+// permissionBtn.install = install
 export default permissionBtn
